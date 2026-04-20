@@ -77,3 +77,7 @@ $(MODLIB)/vdso: FORCE
 PHONY += vdso_install
 vdso_install: $(obj)/vdso.so.dbg $(MODLIB)/vdso
 	$(call cmd,vdso_install)
+
+# Ensure vdso.lds is generated
+$(obj)/vdso.lds: $(src)/vdso.lds.S
+	$(call if_changed_dep,cpp_lds_S)

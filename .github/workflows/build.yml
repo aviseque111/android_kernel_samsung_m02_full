@@ -30,21 +30,20 @@ jobs:
         echo "CONFIG_INITRAMFS_SOURCE=\"\"" >> .config
         echo "CONFIG_BLK_DEV_INITRD=n" >> .config
         echo "CONFIG_VFP=n" >> .config
-        
-        # Certificate handling
         echo "CONFIG_SYSTEM_TRUSTED_KEYS=\"\"" >> .config
         echo "CONFIG_SYSTEM_TRUSTED_KEYRING=n" >> .config
         
-        # ARMv7 baseline (proven working)
+        # ARMv7 baseline + VDSO fix
         echo "CONFIG_AEABI=y" >> .config
         echo "CONFIG_OABI_COMPAT=n" >> .config
         echo "CONFIG_VDSO=y" >> .config
+        echo "CONFIG_ARM_ARCH_TIMER=n" >> .config
         echo "CONFIG_ARM_THUMB=y" >> .config
         echo "CONFIG_SWP_EMULATE=y" >> .config
         echo "CONFIG_HIGHMEM=y" >> .config
         echo "CONFIG_VMSPLIT_3G=y" >> .config
         
-        # Sync and build
+        # Build
         make olddefconfig 2>/dev/null || yes "" | make oldconfig
         make -j4 LOCALVERSION="-KernelSU"
     
