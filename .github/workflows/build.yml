@@ -33,10 +33,11 @@ jobs:
         echo "CONFIG_SYSTEM_TRUSTED_KEYS=\"\"" >> .config
         echo "CONFIG_SYSTEM_TRUSTED_KEYRING=n" >> .config
         
-        # ARMv7 baseline + VDSO fix
+        # ARMv7 baseline (with VDSO DISABLED)
         echo "CONFIG_AEABI=y" >> .config
         echo "CONFIG_OABI_COMPAT=n" >> .config
-        echo "CONFIG_VDSO=y" >> .config
+        echo "CONFIG_VDSO=n" >> .config
+        echo "CONFIG_COMPAT_VDSO=n" >> .config
         echo "CONFIG_ARM_ARCH_TIMER=n" >> .config
         echo "CONFIG_ARM_THUMB=y" >> .config
         echo "CONFIG_SWP_EMULATE=y" >> .config
