@@ -21,25 +21,41 @@ jobs:
         
         make a02_defconfig
         
-        # KernelSU requirements
+        # --- KernelSU Core Requirements ---
         echo "CONFIG_KSU=y" >> .config
         echo "CONFIG_KPROBES=y" >> .config
         echo "CONFIG_KPROBE_EVENTS=y" >> .config
+        echo "CONFIG_OVERLAY_FS=y" >> .config
+        echo "CONFIG_MODULES=y" >> .config
         
-        # Disable problematic features
+        # --- Disable Problematic Features ---
         echo "CONFIG_INITRAMFS_SOURCE=\"\"" >> .config
         echo "CONFIG_BLK_DEV_INITRD=n" >> .config
         echo "CONFIG_VFP=n" >> .config
         
-        # Certificate handling
+        # --- Disable Certificate Handling ---
         echo "CONFIG_SYSTEM_TRUSTED_KEYS=\"\"" >> .config
         echo "CONFIG_SYSTEM_TRUSTED_KEYRING=n" >> .config
         echo "CONFIG_SECONDARY_TRUSTED_KEYRING=n" >> .config
         
-        # --- CRITICAL ARM EABI & VDSO FIXES ---
+        # --- ARMv7 Baseline Configuration (Fixes Multiple Errors at Once) ---
         echo "CONFIG_AEABI=y" >> .config
         echo "CONFIG_OABI_COMPAT=n" >> .config
         echo "CONFIG_VDSO=y" >> .config
+        echo "CONFIG_ARM_THUMB=y" >> .config
+        echo "CONFIG_ARM_THUMBEE=y" >> .config
+        echo "CONFIG_ARM_ARCH_TIMER=y" >> .config
+        echo "CONFIG_ARM_GIC=y" >> .config
+        echo "CONFIG_SWP_EMULATE=y" >> .config
+        echo "CONFIG_CPU_SW_DOMAIN_PAN=y" >> .config
+        echo "CONFIG_HIGHMEM=y" >> .config
+        echo "CONFIG_VMSPLIT_3G=y" >> .config
+        
+        # --- Additional Common Options ---
+        echo "CONFIG_SUSPEND=y" >> .config
+        echo "CONFIG_PM=y" >> .config
+        echo "CONFIG_CPU_IDLE=y" >> .config
+        echo "CONFIG_ARM_CPUIDLE=y" >> .config
         
         # Sync config and build
         make olddefconfig 2>/dev/null || yes "" | make oldconfig
